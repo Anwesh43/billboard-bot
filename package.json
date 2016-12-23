@@ -1,0 +1,16 @@
+{
+  "name": "billboard-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "billboard-hot-100": "^1.0.4",
+    "body-parser": "^1.15.2",
+    "botkit": "^0.4.5"
+  }
+}
