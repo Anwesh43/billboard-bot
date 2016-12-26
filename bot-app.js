@@ -36,7 +36,7 @@ Billboard.init().then((billboard)=>{
        var limit = 30
        console.log(txtMessage)
        if(txtMessage.split(" ").length == 2 && txtMessage.split(" ")[1].toLowerCase() == "song") {
-          bot.reply(message,`the top song right now is ${songs[0].name} and ${songs[0].artist.replace(/  /g,'').replace(/\n/g,'')}`)
+          bot.reply(message,`the top song right now is ${songs[0].name} by ${songs[0].artist.replace(/  /g,'').replace(/\n/g,'')}`)
        }
        else {
        var numberStrings = txtMessage.split(" ").filter(str=>numberRegex.test(str))
