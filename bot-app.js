@@ -35,10 +35,15 @@ Billboard.init().then((billboard)=>{
 
        var limit = 30
        console.log(txtMessage)
+       if(txtMessage.split(" ").length == 2 && txtMessage.split(" ")[1] == "song") {
+          bot.reply(`the top song right now is ${songs[0].name} and ${songs[0].artist.replace(/  /g,'').replace(/\n/g,'')}`)
+       }
+       else {
        var numberStrings = txtMessage.split(" ").filter(str=>numberRegex.test(str))
        if(numberStrings.length >= 1) {
          limit = parseInt(numberStrings[0])
        }
+
        console.log(`limit is ${limit}`)
        if(limit<=30) {
            var reply = songs.filter((song,index)=>index<limit).map((song,index)=>(index+1)+". "+song.name).reduce((a,b)=>a+"\n"+b)
@@ -58,6 +63,7 @@ Billboard.init().then((billboard)=>{
               bot.reply(message,reply)
            }
        }
+     }
 
     })
     controller.hears(['song at','Song at'],'message_received',(bot,message)=>{
