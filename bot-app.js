@@ -1,6 +1,6 @@
 var botkit = require('botkit')
 var config  = require('./config')
-var port = process.env.port||config.port;
+var port = process.env.PORT||config.port;
 var fbUtil = require('./fb_message_util')
 var Billboard = require('billboard-hot-100')
 var numberRegex = /^\d*$/
