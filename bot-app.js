@@ -6,8 +6,10 @@ var Billboard = require('billboard-hot-100')
 var numberRegex = /^\d*$/
 Billboard.init().then((billboard)=>{
     var songs = billboard.getAllSongs()
-    var controller = botkit.facebookbot({verify_token:config.fb_verfiy_token,access_token:config.fb_access_token})
+    var controller = botkit.facebookbot({verify_token:config.fb_verfiy_token,access_token:config.fb_access_token,require_delivery: true})
+    controller.api.thread_settings.greeting(fbUtil.getWelcomeMessage())
     var bot = controller.spawn()
+
     controller.setupWebserver(port,(err,webserver)=>{
        if(err == null) {
           controller.createWebhookEndpoints(webserver,bot,()=>{
@@ -18,6 +20,9 @@ Billboard.init().then((billboard)=>{
     })
     controller.on('facebook_option',(bot,message)=>{
         bot.reply(message,fbUtil.getWelcomeMessage())
+        bot.send(fbUtil.getWelcomeMessage(),()=>{
+          console.log("sent the greeting message")
+        })
     })
     controller.hears(['hi','hello','Hello','Hi'],'message_received',(bot,message)=>{
       bot.reply(message,{sender_action:'typing_on'})
