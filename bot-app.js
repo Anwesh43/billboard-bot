@@ -17,12 +17,12 @@ Billboard.init().then((billboard)=>{
        }
     })
     controller.on('facebook_option',(bot,message)=>{
-        bot.reply(message,"Hey there! I am Grizme bot. To display top songs till a certain number type top followed by the number  to display the details of a particular song please type song at <rank of the song> for example if you type song at 1 i will give you the details of number 1 song")
+        bot.reply(message,fbUtil.getWelcomeMessage())
     })
     controller.hears(['hi','hello','Hello','Hi'],'message_received',(bot,message)=>{
       bot.reply(message,{sender_action:'typing_on'})
       console.log(message)
-      bot.reply(message,"Hey there! I am Grizme bot. To display the list of top songs type top followed  to display the details of a particular song please type song at <rank of the song> for example if you type song at 1 i will give you the details of number 1 song")
+      bot.reply(message,fbUtil.getWelcomeMessage())
       bot.reply(message,{sender_action:'typing_off'})
     })
     controller.hears(['list','top'],'message_received',(bot,message)=>{
@@ -43,7 +43,7 @@ Billboard.init().then((billboard)=>{
            var len = Math.floor(limit/4),prev=0
            for(var i=0;i<3;i++) {
              bot.reply(message,`songs from ${prev}-${prev+len}`)
-             var reply = songs.filter((song,index)=>index>prev && index<prev+len).map((song,index)=>(index+1)+". "+song.name).reduce((a,b)=>a+"\n"+b)
+             var reply = songs.filter((song,index)=>index>=prev && index<prev+len).map((song,index)=>prev+(index+1)+". "+song.name).reduce((a,b)=>a+"\n"+b)
              bot.reply(message,reply)
              prev = prev+len
            }
