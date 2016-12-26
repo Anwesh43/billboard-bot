@@ -32,11 +32,13 @@ Billboard.init().then((billboard)=>{
     })
     controller.hears(['list','top'],'message_received',(bot,message)=>{
        var txtMessage = message.text
-
        var limit = 30
        console.log(txtMessage)
        if(txtMessage.split(" ").length == 2 && txtMessage.split(" ")[1].toLowerCase() == "song") {
+          var song = songs[0]
+          var artist = song.artist.replace(/\n/g,'').replace(/  /g,'')
           bot.reply(message,`the top song right now is ${songs[0].name} by ${songs[0].artist.replace(/  /g,'').replace(/\n/g,'')}`)
+          fbUtil.sendAttachment(bot,message,song.name,artist,song.image)
        }
        else {
        var numberStrings = txtMessage.split(" ").filter(str=>numberRegex.test(str))
