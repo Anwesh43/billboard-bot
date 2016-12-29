@@ -9,7 +9,6 @@ Billboard.init().then((billboard)=>{
     var controller = botkit.facebookbot({verify_token:config.fb_verfiy_token,access_token:config.fb_access_token,require_delivery: true})
     controller.api.thread_settings.greeting(fbUtil.getWelcomeMessage())
     var bot = controller.spawn()
-
     controller.setupWebserver(port,(err,webserver)=>{
        if(err == null) {
           controller.createWebhookEndpoints(webserver,bot,()=>{
@@ -68,11 +67,12 @@ Billboard.init().then((billboard)=>{
      }
 
     })
-    controller.hears(['song at','Song at'],'message_received',(bot,message)=>{
+    controller.hears(['song at','Song at','number','Number','At'],'message_received',(bot,message)=>{
       var txtMessage = message.text
       console.log(txtMessage)
+      var wordLength = message.text.split(" ").length
       var numberStrings = txtMessage.split(" ").filter(str=>numberRegex.test(str))
-      if(numberStrings.length >= 1) {
+      if(numberStrings.length >= 1 && wordLength<=10) {
           var index = parseInt(numberStrings[0])-1
           var song = songs[index]
           var artist = song.artist.replace(/\n/g,'').replace(/  /g,'')
